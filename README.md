@@ -65,8 +65,16 @@ Restart n8n after checking running executions. In queue mode, install the same v
 on the main instance and every worker. See [installation](docs/INSTALLATION.md) for
 Docker, private custom-extension loading, upgrades and rollback.
 
-The package has **not** been published to npm or GitHub by these instructions. A
-public registry install becomes available only after the repository owner publishes it.
+The source repository is [max00346/n8n-nodes-exchange-onprem](https://github.com/max00346/n8n-nodes-exchange-onprem).
+After the candidate is published to npm, install this exact version from n8n's
+**Settings → Community nodes → Install**:
+
+```text
+n8n-nodes-exchange-onprem@0.2.0-rc.1
+```
+
+The candidate uses npm's `next` tag. Pinning the version makes the test installation
+explicit. Package installation must be enabled on the self-hosted n8n instance.
 
 ## Create credentials
 
@@ -121,8 +129,8 @@ See [the audit](docs/AUDIT.md) for exactly what was verified and what remains a 
 ## Publish
 
 The repository contains an MIT license, documentation, examples, tests, a locked
-build dependency tree and GitHub Actions checks for Node 22/24. Set your actual GitHub
-repository URL and security contact before publishing. Then follow
+build dependency tree and GitHub Actions checks for Node 22/24. The repository URL
+and private vulnerability-reporting channel are configured. Follow
 [the release procedure](docs/INSTALLATION.md#publishing). Do not publish a stable `latest`
 release until live acceptance checks pass; this candidate belongs on the `next` tag.
 

@@ -98,12 +98,14 @@ workflow backups; EWS side effects cannot be undone by rolling back software.
 
 ## Publishing
 
-No repository or registry publication is performed by the build scripts.
+No repository or registry publication is performed by the build scripts. The source
+repository is configured; the initial npm publication uses the publisher's interactive
+login. The package's `publishConfig` defaults to the public `next` tag.
 
-1. Choose the GitHub owner, repository URL and npm publisher. Package-name availability
-   must be checked again at publication time.
-2. Add the real `repository`, `bugs` and `homepage` fields to `package.json`; configure
-   a security contact and GitHub private vulnerability reporting. Review the MIT license.
+1. Confirm the npm publisher account. Package-name availability must be checked again
+   at publication time.
+2. Review `repository`, `bugs` and `homepage` in `package.json`, the private security
+   reporting channel and the MIT license before publishing from a fork.
 3. Run `npm ci --ignore-scripts`, `npm run check`, `npm audit --omit=dev`,
    `npm run test:package`, and `npm pack`. Review the full development dependency audit too.
 4. Review `npm pack --dry-run`, inspect the archive, scan for secrets, and complete
@@ -116,3 +118,17 @@ No repository or registry publication is performed by the build scripts.
    pull-request code.
 7. Tag the source revision and attach the archive plus checksums to a GitHub release.
 8. Promote to a stable version only after the live audit gates are recorded as passed.
+
+### Future releases through GitHub Actions
+
+The manual **Publish npm package** workflow is prepared in `.github/workflows/publish.yml`.
+After the initial publication, configure npm Trusted Publishing for GitHub owner
+`max00346`, repository `n8n-nodes-exchange-onprem`, workflow filename `publish.yml`.
+Allow direct publishing for that trusted publisher. Then run the workflow from `main`,
+enter the exact package version and select `next` for release candidates. The workflow
+checks the requested version, reruns package checks, and publishes with provenance.
+It requires npm CLI 11.5.1 or newer and does not use a long-lived npm token.
+
+Publishing to npm makes the package available for self-hosted installation. Verification
+in the n8n Creator Portal is a separate process with additional restrictions; this
+package is not advertised as a verified n8n Cloud node.

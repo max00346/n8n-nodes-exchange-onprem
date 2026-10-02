@@ -1,9 +1,8 @@
 # Security
 
-Report suspected vulnerabilities privately to the repository owner. Do not include
-passwords, NTLM messages, tokens or real mailbox content in public issues. A project
-security contact and GitHub private vulnerability reporting should be configured by
-the repository owner before public release.
+Report suspected vulnerabilities through
+[GitHub private vulnerability reporting](https://github.com/max00346/n8n-nodes-exchange-onprem/security/advisories/new).
+Do not include passwords, NTLM messages, tokens or real mailbox content in public issues.
 
 HTTPS certificate verification is mandatory. NTLMv1 fallback and cross-host redirects
 are prohibited. NTLMv2 includes a cryptographic client nonce, MIC and channel binding.

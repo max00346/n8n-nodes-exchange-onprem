@@ -1,0 +1,63 @@
+name: Publish npm package
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Exact package.json version to publish
+        required: true
+        type: string
+      tag:
+        description: npm distribution tag
+        required: true
+        default: next
+        type: choice
+        options:
+          - next
+          - latest
+
+permissions:
+  contents: read
+
+concurrency:
+  group: npm-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+          cache: npm
+      - name: Check requested release
+        env:
+          RELEASE_VERSION: ${{ inputs.version }}
+          RELEASE_TAG: ${{ inputs.tag }}
+        run: |
+          node <<'NODE'
+          const assert = require('node:assert/strict');
+          const p = require('./package.json');
+          assert.equal(p.version, process.env.RELEASE_VERSION);
+          assert.ok(['next', 'latest'].includes(process.env.RELEASE_TAG));
+          if (p.version.includes('-')) assert.equal(process.env.RELEASE_TAG, 'next');
+          const [major, minor, patch] = require('node:child_process')
+            .execFileSync('npm', ['--version'], { encoding: 'utf8' })
+            .trim().split('.').map(Number);
+          assert.ok(major > 11 || (major === 11 && (minor > 5 || (minor === 5 && patch >= 1))));
+          NODE
+      - run: npm ci --ignore-scripts
+      - run: npm run check
+      - run: npm audit --omit=dev
+      - run: npm run test:package
+      - name: Publish with npm trusted publishing and provenance
+        env:
+          RELEASE_TAG: ${{ inputs.tag }}
+        run: npm publish --provenance --access public --tag "$RELEASE_TAG"
