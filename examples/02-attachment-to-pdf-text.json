@@ -1,0 +1,65 @@
+{
+  "name": "Exchange \u2013 Attachment to PDF text",
+  "active": false,
+  "nodes": [
+    {
+      "id": "7972423d-19a8-4500-9e54-5ba272a5ce7d",
+      "name": "Manual start",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [0, 0],
+      "parameters": {}
+    },
+    {
+      "id": "1beafd0c-7d49-402f-a5fa-07aeb89915b9",
+      "name": "Download attachment",
+      "type": "n8n-nodes-exchange-onprem.exchangeOnPrem",
+      "typeVersion": 1,
+      "position": [250, 0],
+      "parameters": {
+        "resource": "attachment",
+        "operation": "download",
+        "parameters": "{\"attachmentId\": \"REPLACE_WITH_ATTACHMENT_ID\", \"binaryProperty\": \"data\"}",
+        "confirm": false
+      }
+    },
+    {
+      "id": "c1a935b3-d7de-4697-9cb7-f249cfe60b17",
+      "name": "Extract PDF text",
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [500, 0],
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      }
+    }
+  ],
+  "connections": {
+    "Manual start": {
+      "main": [
+        [
+          {
+            "node": "Download attachment",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download attachment": {
+      "main": [
+        [
+          {
+            "node": "Extract PDF text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

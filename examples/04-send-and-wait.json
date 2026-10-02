@@ -1,0 +1,45 @@
+{
+  "name": "Exchange \u2013 Approval request",
+  "active": false,
+  "nodes": [
+    {
+      "id": "c6dd93dd-5cd1-47b9-b64e-34603e33bb72",
+      "name": "Manual start",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [0, 0],
+      "parameters": {}
+    },
+    {
+      "id": "4a7a5856-f3f2-4329-b5a4-1253fdf445aa",
+      "name": "Send approval",
+      "type": "n8n-nodes-exchange-onprem.exchangeSendAndWait",
+      "typeVersion": 1,
+      "position": [250, 0],
+      "parameters": {
+        "to": "recipient@example.com",
+        "subject": "Approval requested",
+        "message": "Please review this request.",
+        "responseType": "approval",
+        "waitHours": 24,
+        "confirm": false
+      }
+    }
+  ],
+  "connections": {
+    "Manual start": {
+      "main": [
+        [
+          {
+            "node": "Send approval",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

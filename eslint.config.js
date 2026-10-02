@@ -1,0 +1,2 @@
+'use strict';
+module.exports=[{files:['**/*.js'],ignores:['dist/**','node_modules/**'],languageOptions:{ecmaVersion:2022,sourceType:'commonjs',globals:{Buffer:'readonly',URL:'readonly',setTimeout:'readonly',clearTimeout:'readonly',console:'readonly',process:'readonly',__dirname:'readonly'}},rules:{'no-unused-vars':['error',{argsIgnorePattern:'^_'}],'no-undef':'error','no-unreachable':'error','no-dupe-keys':'error','no-constant-condition':'error','eqeqeq':'error'}}];

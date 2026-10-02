@@ -1,0 +1,83 @@
+{
+  "name": "n8n-nodes-exchange-onprem",
+  "version": "0.2.0-rc.1",
+  "description": "Native n8n nodes for on-premises Microsoft Exchange: EWS, NTLMv2, mail, calendar, contacts, tasks and synchronization",
+  "license": "MIT",
+  "author": {
+    "name": "MMN Systems"
+  },
+  "keywords": [
+    "n8n-community-node-package",
+    "exchange",
+    "ews",
+    "ntlm",
+    "on-premise"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "NOTICE",
+    "docs",
+    "examples",
+    "SECURITY.md",
+    "CHANGELOG.md",
+    "scripts/live-read-test.js"
+  ],
+  "scripts": {
+    "build": "node scripts/build.js",
+    "test": "node --test test/*.test.js",
+    "lint": "eslint src scripts test",
+    "check": "npm run build && npm run lint && npm run format:check && npm test && node scripts/release-check.js",
+    "prepack": "npm run build",
+    "prepublishOnly": "npm run check && npm audit --omit=dev && npm run test:package",
+    "test:live": "node scripts/live-read-test.js",
+    "format": "prettier --write src scripts test docs examples *.md *.json .github/**/*.yml",
+    "format:check": "prettier --check src scripts test docs examples *.md *.json .github/**/*.yml",
+    "test:package": "node scripts/verify-package.js"
+  },
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/ExchangeOnPrem.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/ExchangeOnPrem/ExchangeOnPrem.node.js",
+      "dist/nodes/ExchangeOnPremTrigger/ExchangeOnPremTrigger.node.js",
+      "dist/nodes/ExchangeSendAndWait/ExchangeSendAndWait.node.js"
+    ]
+  },
+  "dependencies": {
+    "fast-xml-parser": "5.11.2",
+    "js-md4": "0.3.2"
+  },
+  "peerDependencies": {
+    "n8n-workflow": ">=1.82.0 <3"
+  },
+  "devDependencies": {
+    "eslint": "9.39.1",
+    "n8n-core": "2.41.4",
+    "n8n-workflow": "2.41.2",
+    "prettier": "3.6.2"
+  },
+  "peerDependenciesMeta": {
+    "n8n-workflow": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "access": "public",
+    "tag": "next"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/max00346/n8n-nodes-exchange-onprem.git"
+  },
+  "homepage": "https://github.com/max00346/n8n-nodes-exchange-onprem#readme",
+  "bugs": {
+    "url": "https://github.com/max00346/n8n-nodes-exchange-onprem/issues"
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "name": "Exchange \u2013 New mail changes",
+  "active": false,
+  "nodes": [
+    {
+      "id": "130d4554-e3f6-4645-81b2-3c28703cd465",
+      "name": "New mail",
+      "type": "n8n-nodes-exchange-onprem.exchangeOnPremTrigger",
+      "typeVersion": 1,
+      "position": [0, 0],
+      "parameters": {
+        "folder": "inbox",
+        "folderId": "",
+        "changeType": "Create",
+        "emitExisting": false,
+        "maxPages": 20,
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "3c928ed6-2c29-4f35-9e55-b48dbc686ef9",
+      "name": "Read new message",
+      "type": "n8n-nodes-exchange-onprem.exchangeOnPrem",
+      "typeVersion": 1,
+      "position": [250, 0],
+      "parameters": {
+        "resource": "message",
+        "operation": "get",
+        "parameters": "={{ JSON.stringify({ itemId: $json.data.Message.ItemId.$.Id }) }}",
+        "confirm": false
+      }
+    }
+  ],
+  "connections": {
+    "New mail": {
+      "main": [
+        [
+          {
+            "node": "Read new message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

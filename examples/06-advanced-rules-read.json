@@ -1,0 +1,43 @@
+{
+  "name": "Exchange \u2013 Advanced EWS example",
+  "active": false,
+  "nodes": [
+    {
+      "id": "8f09647d-1342-4f0f-8ed5-b85df2949cf8",
+      "name": "Manual start",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [0, 0],
+      "parameters": {}
+    },
+    {
+      "id": "28a47a29-5e68-41cf-a5df-d8b33ecfc5e0",
+      "name": "Advanced read",
+      "type": "n8n-nodes-exchange-onprem.exchangeOnPrem",
+      "typeVersion": 1,
+      "position": [250, 0],
+      "parameters": {
+        "resource": "advanced",
+        "operation": "execute",
+        "parameters": "{\"ewsOperation\": \"GetInboxRules\", \"bodyXml\": \"<m:GetInboxRules><m:MailboxSmtpAddress>user@example.com</m:MailboxSmtpAddress></m:GetInboxRules>\"}",
+        "confirm": false
+      }
+    }
+  ],
+  "connections": {
+    "Manual start": {
+      "main": [
+        [
+          {
+            "node": "Advanced read",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

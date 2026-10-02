@@ -1,0 +1,43 @@
+{
+  "name": "Exchange \u2013 Calendar window",
+  "active": false,
+  "nodes": [
+    {
+      "id": "ee03c66a-fe96-4176-aa82-fc85cd693c64",
+      "name": "Manual start",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [0, 0],
+      "parameters": {}
+    },
+    {
+      "id": "da91cf2f-3bc7-468b-8b87-0799b18183d1",
+      "name": "Calendar events",
+      "type": "n8n-nodes-exchange-onprem.exchangeOnPrem",
+      "typeVersion": 1,
+      "position": [250, 0],
+      "parameters": {
+        "resource": "event",
+        "operation": "getAll",
+        "parameters": "{\"start\": \"2026-10-01T00:00:00Z\", \"end\": \"2026-10-08T00:00:00Z\", \"limit\": 100}",
+        "confirm": false
+      }
+    }
+  ],
+  "connections": {
+    "Manual start": {
+      "main": [
+        [
+          {
+            "node": "Calendar events",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

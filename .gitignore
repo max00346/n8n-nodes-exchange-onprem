@@ -1,0 +1,10 @@
+node_modules/
+dist/
+coverage/
+*.tgz
+*.zip
+*.log
+.env
+.env.*
+!.env.example
+.DS_Store

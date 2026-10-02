@@ -1,0 +1,14 @@
+This is an independent community integration. Microsoft, Exchange and n8n names
+identify interoperable products; no endorsement or official certification is claimed.
+
+Production dependencies:
+- fast-xml-parser, MIT, https://github.com/NaturalIntelligence/fast-xml-parser
+- js-md4, MIT, https://github.com/emn178/js-md4
+Their transitive dependencies retain their respective licenses in npm distributions.
+The optional peer dependency n8n-workflow is supplied by the n8n host and retains
+its own license. The package does not auto-install a second n8n runtime.
+This package's MIT license does not relicense n8n.
+
+The EWS operation names are derived from Microsoft's public EWS operation reference.
+NTLMv2, MIC and channel-binding code implements MS-NLMP and RFC 5929. No Microsoft
+source code or Exchange server schema files are included. The icon is original.

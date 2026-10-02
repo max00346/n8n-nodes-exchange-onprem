@@ -1,0 +1,67 @@
+{
+  "name": "Exchange \u2013 Search and read",
+  "active": false,
+  "nodes": [
+    {
+      "id": "5b4a1caf-cc46-406e-922d-04539963ba31",
+      "name": "Manual start",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [0, 0],
+      "parameters": {}
+    },
+    {
+      "id": "fb1a6db3-b58a-445c-96ad-cecc3af83f6f",
+      "name": "Search mail",
+      "type": "n8n-nodes-exchange-onprem.exchangeOnPrem",
+      "typeVersion": 1,
+      "position": [250, 0],
+      "parameters": {
+        "resource": "message",
+        "operation": "getAll",
+        "parameters": "{\"query\": \"subject:invoice\", \"limit\": 10, \"splitResults\": true}",
+        "confirm": false
+      }
+    },
+    {
+      "id": "a952df01-8516-4f1d-88c0-e2b2c3979d90",
+      "name": "Read full message",
+      "type": "n8n-nodes-exchange-onprem.exchangeOnPrem",
+      "typeVersion": 1,
+      "position": [500, 0],
+      "parameters": {
+        "resource": "message",
+        "operation": "get",
+        "parameters": "={{ JSON.stringify({ itemId: $json.data.ItemId.$.Id }) }}",
+        "confirm": false
+      }
+    }
+  ],
+  "connections": {
+    "Manual start": {
+      "main": [
+        [
+          {
+            "node": "Search mail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search mail": {
+      "main": [
+        [
+          {
+            "node": "Read full message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
